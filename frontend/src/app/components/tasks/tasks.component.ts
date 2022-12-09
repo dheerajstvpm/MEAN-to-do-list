@@ -16,7 +16,7 @@ export class TasksComponent {
     this.taskService
       .getTasks()
       .subscribe(
-        (tasks) => this.tasks = tasks
+        (tasks) => {this.tasks = tasks}
       );
   }
 
@@ -24,17 +24,18 @@ export class TasksComponent {
     this.taskService
       .deleteTask(task)
       .subscribe(
-        () => this.tasks = this.tasks.filter(t => t.id !== task.id)
+        () => this.tasks = this.tasks.filter(t => t._id !== task._id)
       );
   }
 
   toggleReminder(task: Task) {
-    
     task.reminder=!task.reminder;
     console.log(task.reminder)
     this.taskService
       .updateReminder(task)
-      .subscribe();
+      .subscribe((res)=>{
+        console.log(`PUT response: ${res}`)
+      });
   }
 
   addTask(task:Task){

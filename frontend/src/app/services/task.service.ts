@@ -7,7 +7,7 @@ import {Task} from '../Task'
 
 const httpOptions={
   headers: new HttpHeaders({
-    'Content-Type':'application/json'
+    'Content-Type': 'application/json'
   })
 }
 
@@ -15,7 +15,7 @@ const httpOptions={
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = `http://localhost:5000/tasks`
+  private apiUrl = `http://localhost:3000/tasks`
 
   constructor(private http:HttpClient) {}
 
@@ -23,11 +23,12 @@ export class TaskService {
     return this.http.get<Task[]>(this.apiUrl);
   }
   deleteTask(task:Task):Observable<Task>{
-    const url=`${this.apiUrl}/${task.id}`;
+    const url=`${this.apiUrl}/${task._id}`;
     return this.http.delete<Task>(url);
   }
   updateReminder(task:Task):Observable<Task>{
-    const url=`${this.apiUrl}/${task.id}`;
+    const url=`${this.apiUrl}/${task._id}/${task.reminder}`;
+    console.log(`PUT task : ${task.reminder}`);
     return this.http.put<Task>(url,task, httpOptions);
   }
   addTask(task:Task):Observable<Task>{
